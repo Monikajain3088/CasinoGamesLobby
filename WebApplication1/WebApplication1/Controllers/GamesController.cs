@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 using WebApplication1.BAL;
+using Microsoft.AspNetCore.Authorization;
+
 namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class GamesController : ControllerBase
     {
         // GET: api/Games
-        [HttpGet]
+        [HttpGet, Authorize]
         [Route("GameCollections")]
+       
         public IActionResult GetGameCollections(string gameCollectionId)
         {
             try

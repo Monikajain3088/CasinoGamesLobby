@@ -1,0 +1,17 @@
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.deps.json
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.runtimeconfig.json
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.runtimeconfig.dev.json
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.dll
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.pdb
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.csprojAssemblyReference.cache
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.csproj.CoreCompileInputs.cache
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.AssemblyInfoInputs.cache
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.AssemblyInfo.cs
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.dll
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.pdb
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\WebApplication1.dll
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\bin\Debug\netcoreapp2.2\WebApplication1.pdb
+E:\Interview\Project\WebApplication1\CasinoGamesLobbyApiTest\obj\Debug\netcoreapp2.2\CasinoGamesLobbyApiTest.csproj.CopyComplete

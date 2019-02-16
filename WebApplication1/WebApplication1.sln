@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{8E8A6751-AA33-483A-A865-65455387559A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{8E8A6751-AA33-483A-A865-65455387559A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasinoGamesLobbyApiTest", "CasinoGamesLobbyApiTest\CasinoGamesLobbyApiTest.csproj", "{382A1EB1-AC3D-4B9F-B9BF-F12D9DE00A78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8E8A6751-AA33-483A-A865-65455387559A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E8A6751-AA33-483A-A865-65455387559A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E8A6751-AA33-483A-A865-65455387559A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382A1EB1-AC3D-4B9F-B9BF-F12D9DE00A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382A1EB1-AC3D-4B9F-B9BF-F12D9DE00A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382A1EB1-AC3D-4B9F-B9BF-F12D9DE00A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382A1EB1-AC3D-4B9F-B9BF-F12D9DE00A78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

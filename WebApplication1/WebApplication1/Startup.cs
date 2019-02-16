@@ -38,8 +38,8 @@ namespace WebApplication1
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = "http://localhost:44369",
-                    ValidAudience = "http://localhost:44369",
+                    ValidIssuer = "http://localhost:44363",
+                    ValidAudience = "http://localhost:44363",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
                 };
             });
