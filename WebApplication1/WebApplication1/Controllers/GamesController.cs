@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
     public class GamesController : ControllerBase
     {
         // GET: api/Games
-        [HttpGet, Authorize]
+        [HttpGet]
         [Route("GameCollections")]
        
         public IActionResult GetGameCollections(string gameCollectionId)
