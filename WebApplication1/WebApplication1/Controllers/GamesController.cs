@@ -33,6 +33,23 @@ namespace WebApplication1.Controllers
          
         }
         [HttpGet]
+        [Route("test")]
+
+        public IActionResult test(string gameCollectionId)
+        {
+            try
+            {
+                POCDB_testContext pOCDB_TestContext = new POCDB_testContext();
+                return Ok(pOCDB_TestContext.GameRelationships.Select(x=>x.GameRelationshipId));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+        [HttpGet]
         [Route("GameDetails")]
         public IActionResult GetGameDetails(string gameId)
         {

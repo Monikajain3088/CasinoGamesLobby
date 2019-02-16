@@ -11,5 +11,6 @@
     <WebStackScaffolding_DbContextTypeFullName>WebApplication1.Models.POCDB_testContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>MTestWebApi - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

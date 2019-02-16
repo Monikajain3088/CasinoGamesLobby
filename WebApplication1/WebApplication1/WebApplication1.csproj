@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>8b13be2a-955e-4865-9c0c-2dfe056e88bd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +22,4 @@
 <ItemGroup>
   <DotnetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" version="2.0.0" />
   </ItemGroup>
-<ItemGroup>
-  <Folder Include="Models\" />
-</ItemGroup>
 </Project>

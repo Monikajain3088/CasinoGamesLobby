@@ -27,6 +27,10 @@ namespace WebApplication1.Models
         public virtual DbSet<Games> Games { get; set; }
         public virtual DbSet<GamesDevice> GamesDevice { get; set; }
         public virtual DbSet<SubCollections> SubCollections { get; set; }
+        public virtual DbSet<GameRelationships> GameRelationships { get; set; }
+
+
+        public virtual DbSet<GetGamesDetaillsSP> GetGamesDetaillsSP { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -195,18 +199,11 @@ namespace WebApplication1.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.RefDeviceId)
-                    .IsRequired()
-                    .HasColumnName("RefDeviceId");
+               
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.RefCategoryId).HasColumnName("refCategoryId");
-                entity.Property(e => e.RefSubCollectionId).HasColumnName("RefSubCollectionId");
-
-                entity.Property(e => e.RefCollectionId).HasColumnName("refCollectionId");
+                    .HasMaxLength(50);                             
 
                 entity.Property(e => e.Thumbnail).HasMaxLength(100);
             });

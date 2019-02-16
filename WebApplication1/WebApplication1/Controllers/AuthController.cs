@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication1.DTO;
 
@@ -16,6 +17,11 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IConfigurationRoot _configurationRoot;
+        public AuthController(IConfigurationRoot configurationRoot)
+        {
+            _configurationRoot = configurationRoot;
+        }
         [HttpPost, Route("GenerateToken")]
         public IActionResult CreateToken([FromBody]LoginDTOIn user)
         {
@@ -26,12 +32,12 @@ namespace WebApplication1.Controllers
 
             if (user.UserName == "nitin" && user.Password == "jain")
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurationRoot["JwtSecurityToken:Key"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:44363",
-                    audience: "http://localhost:44363",
+                    issuer: _configurationRoot["JwtSecurityToken:Issuer"],
+                    audience: _configurationRoot["JwtSecurityToken:Audience"],
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials
