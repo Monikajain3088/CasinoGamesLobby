@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using WebApplication1.Controllers;
 
 namespace CasinoGamesLobbyApiTest
@@ -18,9 +16,20 @@ namespace CasinoGamesLobbyApiTest
         [TestMethod]
         private void TestGameCollections_OK()
         {
-            var result = _gamesController.GetGameCollections(GameData.gameCollectionId.ToString());
-           // Assert.IsFalse(, "1 should not be prime");
+            try
+            {
+                var result = _gamesController.GetGameCollections(GameData.gameCollectionId.ToString());
+                if(result == null){
+                    Assert.IsFalse(false, "should not be null");//you can show your error messages here
+                } else {
+                    //here comes your datagridview databind 
+                }
 
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail();
+            }
         }
     }
 }

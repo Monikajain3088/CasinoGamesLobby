@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,43 +14,35 @@ using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
-    public class AuthController : ControllerBase
+    [Route("[controller]")]
+    public class UsersController : ControllerBase
     {
-        private readonly IConfigurationRoot _configurationRoot;
-        public AuthController(IConfigurationRoot configurationRoot)
+        private IUserService _userService;
+
+        public UsersController(IUserService userService)
         {
-            _configurationRoot = configurationRoot;
+            _userService = userService;
         }
-        [HttpPost, Route("GenerateToken")]
-        public IActionResult CreateToken([FromBody]LoginDTOIn user)
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody]LoginDTOIn userParam)
         {
+            var user = _userService.Authenticate(userParam.UserName, userParam.Password);
+
             if (user == null)
-            {
-                return BadRequest("Invalid client request");
-            }
+                return BadRequest(new { message = "Username or password is incorrect" });
 
-            if (user.UserName == "nitin" && user.Password == "jain")
-            {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurationRoot["JwtSecurityToken:Key"]));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            return Ok(user);
+        }
 
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: _configurationRoot["JwtSecurityToken:Issuer"],
-                    audience: _configurationRoot["JwtSecurityToken:Audience"],
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
-            }
-            else
-            {
-                return Unauthorized();
-            }
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var users = _userService.GetAll();
+            return Ok(users);
         }
     }
 }

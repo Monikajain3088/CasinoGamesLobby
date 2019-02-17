@@ -8,6 +8,7 @@ namespace CasinoGamesLobbyApiTest
         [TestMethod]
         public void TestMethod1()
         {
+
         }
     }
 }
