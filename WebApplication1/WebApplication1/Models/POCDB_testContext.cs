@@ -28,6 +28,7 @@ namespace WebApplication1.Models
         public virtual DbSet<GamesDevice> GamesDevice { get; set; }
         public virtual DbSet<SubCollections> SubCollections { get; set; }
         public virtual DbSet<GameRelationships> GameRelationships { get; set; }
+        public virtual DbSet<UserInfo> UserInfo { get; set; }
 
 
         public virtual DbSet<GetGamesDetaillsSP> GetGamesDetaillsSP { get; set; }

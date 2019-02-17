@@ -5,44 +5,69 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using WebApplication1.BAL;
 using WebApplication1.DTO;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class UsersController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IConfigurationRoot _configurationRoot;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IPasswordHasher<IdentityUser> _passwordHasher;
 
-        public UsersController(IUserService userService)
+
+        public AuthController(IConfigurationRoot configurationRoot)
         {
-            _userService = userService;
+            _configurationRoot = configurationRoot;
         }
-
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]LoginDTOIn userParam)
+        [HttpPost, Route("GenerateToken")]
+        public IActionResult CreateTokenAsync([FromBody]LoginDTOIn userInfo)
         {
-            var user = _userService.Authenticate(userParam.UserName, userParam.Password);
+            //var existUser = await  _userManager.FindByNameAsync(userInfo.Email);
+            if (userInfo == null)
+            {
+                return BadRequest("Invalid client request");
+            }
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+            if (LoginHelper.IsValidUser(userInfo))
+            {
 
-            return Ok(user);
+                //var userClaims = await _userManager.GetClaimsAsync(existUser);
+
+                //var claims = new[]
+                //{
+                //        new Claim(JwtRegisteredClaimNames.NameId, existUser.Id),
+                //        new Claim(JwtRegisteredClaimNames.Sub, existUser.UserName),                       
+                //        new Claim(JwtRegisteredClaimNames.Email, existUser.Email)
+                //    }.Union(userClaims);
+
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurationRoot["JwtSecurityToken:Key"]));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                var tokeOptions = new JwtSecurityToken(
+                    issuer: _configurationRoot["JwtSecurityToken:Issuer"],
+                    audience: _configurationRoot["JwtSecurityToken:Audience"],
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddMinutes(5),
+                    signingCredentials: signinCredentials
+                );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                return Ok(new { Token = tokenString });
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var users = _userService.GetAll();
-            return Ok(users);
-        }
+      
     }
 }
