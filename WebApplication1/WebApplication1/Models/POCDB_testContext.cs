@@ -31,6 +31,7 @@ namespace WebApplication1.Models
 
 
         public virtual DbSet<GetGamesDetaillsSP> GetGamesDetaillsSP { get; set; }
+        public virtual DbSet<GetGameCollectionsSP> GetGameCollectionsSP { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

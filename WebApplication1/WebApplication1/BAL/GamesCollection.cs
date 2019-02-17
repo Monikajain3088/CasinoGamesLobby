@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using WebApplication1.DTO;
 using WebApplication1.Model;
@@ -18,31 +17,26 @@ namespace WebApplication1.BAL
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
                 {
-                    //gameCollectionDTOOut.Gamecollections =
-                    //    = pOCDB_testContext.Games
-                    //         .Join(pOCDB_testContext.SubCollections, Game => Game.RefSubCollectionId, SubCollection => SubCollection.SubCollectionId, (Game, SubCollection) => new { Game = Game, SubCollection = SubCollection })
-                    //         .Join(pOCDB_testContext.GameCollections, SubCollection => SubCollection.SubCollection.RefGameCollectionId, GameCollection => GameCollection.CollectionId, (SubCollection, GameCollection) => new { SubCollection = SubCollection, GameCollection = GameCollection })
-                    //         .Where(con => (!string.IsNullOrEmpty(gameCollectionId) ? con.GameCollection.CollectionId == Convert.ToInt32(gameCollectionId) : true))
-                    //         .GroupBy(g => g.GameCollection.CollectionId)
-                    //         .Select(x => new Gamecollection
-                    //         {
-                    //             CollectionId = x.Key,
-                    //             Name = x.Select(z => z.GameCollection.Name).FirstOrDefault(),
-                    //             Games = x.GroupBy(g => g.SubCollection.Game.GameId)
-                    //             .Select(fg => new Game
-                    //             {
-                    //                 GameId = fg.Key,
-                    //                 Name = fg.Select(dc => dc.SubCollection.Game.Name).FirstOrDefault(),
-                    //             }).ToList(),
-                    //             SubCollections = x.GroupBy(g => g.SubCollection.SubCollection.SubCollectionId)
-                    //             .Select(tg => new GameSubCollection
-                    //             {
-                    //                 SubCollectionId = tg.Key,
-                    //                 Name = tg.Select(df => df.SubCollection.SubCollection.Name).FirstOrDefault()
-                    //             }).ToList()
+                    gameCollectionDTOOut.Gamecollections = pOCDB_testContext.GetGameCollectionsSP.FromSql("Exec dbo.[GetGameCollections] @gameCollectionId={0}", Convert.ToInt32(gameCollectionId))
+                        .GroupBy(g => g.GameCollectionId)
+                         .Select(x => new Gamecollection
+                         {
+                             CollectionId = x.Key,
+                             Name = x.Select(z => z.GameCollectionName).FirstOrDefault(),
+                             Games = x.GroupBy(g => g.GameId)
+                                .Select(fg => new Game
+                                {
+                                    GameId = fg.Key,
+                                    Name = fg.Select(dc => dc.GameName).FirstOrDefault(),
+                                }).ToList(),
+                             SubCollections = x.GroupBy(g => g.SubCollectionId)
+                                .Select(tg => new GameSubCollection
+                                {
+                                    SubCollectionId = tg.Key,
+                                    Name = tg.Select(df => df.SubCollectionName).FirstOrDefault()
+                                }).ToList()
 
-                    //         }).ToList();
-
+                         }).ToList();
                     return gameCollectionDTOOut;
                 };
             }
