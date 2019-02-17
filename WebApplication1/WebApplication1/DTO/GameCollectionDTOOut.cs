@@ -8,6 +8,6 @@ namespace WebApplication1.DTO
 {
     public class GameCollectionDTOOut
     {
-        public List<Gamecollection> Gamecollections { get; set; }
+        public List<GamecollectionView> Gamecollections { get; set; }
     }
 }

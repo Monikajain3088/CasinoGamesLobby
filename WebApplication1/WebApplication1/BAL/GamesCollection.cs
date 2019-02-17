@@ -17,9 +17,10 @@ namespace WebApplication1.BAL
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
                 {
-                    gameCollectionDTOOut.Gamecollections = pOCDB_testContext.GetGameCollectionsSP.FromSql("Exec dbo.[GetGameCollections] @gameCollectionId={0}", Convert.ToInt32(gameCollectionId))
+                    gameCollectionDTOOut.Gamecollections = pOCDB_testContext.GetGameCollectionsSP
+                        .FromSql("Exec dbo.[GetGameCollections] @gameCollectionId={0}", Convert.ToInt32(gameCollectionId))
                         .GroupBy(g => g.GameCollectionId)
-                         .Select(x => new Gamecollection
+                         .Select(x => new GamecollectionView
                          {
                              CollectionId = x.Key,
                              Name = x.Select(z => z.GameCollectionName).FirstOrDefault(),
@@ -45,26 +46,31 @@ namespace WebApplication1.BAL
                 return new GameCollectionDTOOut();
             }
         }
-        public static object GetGameDetails(string gameId)
+        public static GamesDetailsDTOOut GetGameDetails(string gameId)
         {
+            GamesDetailsDTOOut gamesDetailsDTOOut = new GamesDetailsDTOOut();
             try
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
                 {
 
-                    var dbResults = pOCDB_testContext.GetGamesDetaillsSP.FromSql("Exec dbo.[GetGamesDetaills] @gameId={0}", Convert.ToInt32(gameId)).ToList();
-                    var Res = dbResults.Select(x => new
-                    {
-                        Gname = x.Name,
-                        GameId = x.GameId,
-                        GameTombnil = x.Thumbnail,
-                        GameCategory = x.CategoryName,
-                        GameCategoryId = x.CategoryId,
-                        DeviceName = x.DeviceName,
-                        GameCOllectionList = dbResults.GroupBy(g => g)
-
-                    });
-                    return dbResults.ToList();
+                    gamesDetailsDTOOut.gameDetailsView = pOCDB_testContext.GetGamesDetaillsSP
+                        .FromSql("Exec dbo.[GetGamesDetaills] @gameId={0}", Convert.ToInt32(gameId))
+                        .GroupBy(g => g.GameId)
+                        .Select(x => new GameDetailsView
+                        {
+                            Name = x.Select(g => g.Name).FirstOrDefault(),
+                            GameId = x.Key,
+                            Thumbnail = x.Select(g => g.Thumbnail).FirstOrDefault(),
+                            CategoryName = x.Select(g => g.CategoryName).FirstOrDefault(),
+                            DeviceName = x.Select(g => g.DeviceName).FirstOrDefault(),
+                            GameCollections = x.Select(gc => new Gamecollection
+                            {
+                                CollectionId = gc.GameCollectionId,
+                                Name = gc.GameCollectionName
+                            }).ToList()
+                        }).ToList();
+                    return gamesDetailsDTOOut;
                 }
             }
             catch (Exception ex)
