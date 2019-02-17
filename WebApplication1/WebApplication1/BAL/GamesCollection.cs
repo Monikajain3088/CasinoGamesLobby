@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using WebApplication1.DTO;
 using WebApplication1.Model;
@@ -17,8 +19,11 @@ namespace WebApplication1.BAL
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
                 {
+                    var gameCollectionIdParam = new SqlParameter("@gameCollectionId", SqlDbType.Int);
+                    gameCollectionIdParam.Value = (object)gameCollectionId ?? DBNull.Value;
+
                     gameCollectionDTOOut.Gamecollections = pOCDB_testContext.GetGameCollectionsSP
-                        .FromSql("Exec dbo.[GetGameCollections] @gameCollectionId={0}", Convert.ToInt32(gameCollectionId))
+                        .FromSql("Exec dbo.[GetGameCollections] @gameCollectionId=@gameCollectionId", gameCollectionIdParam)
                         .GroupBy(g => g.GameCollectionId)
                          .Select(x => new GamecollectionView
                          {
@@ -53,9 +58,11 @@ namespace WebApplication1.BAL
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
                 {
+                    var gameIdParam = new SqlParameter("@gameId", SqlDbType.Int);
+                    gameIdParam.Value = (object)gameId ?? DBNull.Value;
 
                     gamesDetailsDTOOut.gameDetailsView = pOCDB_testContext.GetGamesDetaillsSP
-                        .FromSql("Exec dbo.[GetGamesDetaills] @gameId={0}", Convert.ToInt32(gameId))
+                        .FromSql("Exec dbo.[GetGamesDetaills] @gameId=@gameId", gameIdParam)
                         .GroupBy(g => g.GameId)
                         .Select(x => new GameDetailsView
                         {

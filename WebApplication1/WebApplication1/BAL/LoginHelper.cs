@@ -11,7 +11,6 @@ namespace WebApplication1.BAL
     {
         public static bool IsValidUser(LoginDTOIn userCredetials)
         {
-            Boolean isUserValid = false;
             try
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
@@ -23,7 +22,6 @@ namespace WebApplication1.BAL
             {
                 throw ex;
             }            
-            return isUserValid;
            
         }
 
