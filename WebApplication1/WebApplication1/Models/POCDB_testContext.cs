@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApplication1.Models
 {
@@ -38,7 +40,12 @@ namespace WebApplication1.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=aspnetcoretest.database.windows.net,1433;Database=POCDB_test;Persist Security Info=False;User ID=Admin_Monika;Password=ILoveYou2;MultipleActiveResultSets=true;Integrated Security=False;");
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json")
+                   .Build();
+                var connectionString = configuration["SQlConn:ConString"];
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 

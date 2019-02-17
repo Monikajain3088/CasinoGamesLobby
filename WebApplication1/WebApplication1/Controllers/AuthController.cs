@@ -29,7 +29,6 @@ namespace WebApplication1.Controllers
         [HttpPost, Route("GenerateToken")]
         public IActionResult CreateTokenAsync([FromBody]LoginDTOIn userInfo)
         {
-            //var existUser = await  _userManager.FindByNameAsync(userInfo.Email);
             if (userInfo == null)
             {
                 return BadRequest("Invalid client request");
@@ -37,16 +36,6 @@ namespace WebApplication1.Controllers
 
             if (LoginHelper.IsValidUser(userInfo))
             {
-
-                //var userClaims = await _userManager.GetClaimsAsync(existUser);
-
-                //var claims = new[]
-                //{
-                //        new Claim(JwtRegisteredClaimNames.NameId, existUser.Id),
-                //        new Claim(JwtRegisteredClaimNames.Sub, existUser.UserName),                       
-                //        new Claim(JwtRegisteredClaimNames.Email, existUser.Email)
-                //    }.Union(userClaims);
-
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurationRoot["JwtSecurityToken:Key"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 

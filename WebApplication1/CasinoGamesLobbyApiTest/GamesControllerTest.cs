@@ -16,7 +16,10 @@ namespace CasinoGamesLobbyApiTest
         {
             _gamesController = new GamesController();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task TestGameCollectionsByNullParam_OK()
         {
@@ -34,6 +37,10 @@ namespace CasinoGamesLobbyApiTest
                 Assert.Fail();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task TestGameCollectionsByGameCollectionId_OK()
         {

@@ -24,7 +24,7 @@ namespace WebApplication1.BAL
                     var gameCollectionIdParam =new SqlParameter("@gameCollectionId", SqlDbType.Int);
                     gameCollectionIdParam.Value = (object)gameCollectionId ?? DBNull.Value;
 
-                    gameCollectionDTOOut.Gamecollections = pOCDB_testContext.GetGameCollectionsSP
+                    gameCollectionDTOOut.Gamecollections =await pOCDB_testContext.GetGameCollectionsSP
                         .FromSql("Exec dbo.[GetGameCollections] @gameCollectionId=@gameCollectionId", gameCollectionIdParam)
                         .GroupBy(g => g.GameCollectionId)
                          .Select(x => new GamecollectionView
@@ -32,19 +32,19 @@ namespace WebApplication1.BAL
                              CollectionId = x.Key,
                              Name = x.Select(z => z.GameCollectionName).FirstOrDefault(),
                              Games = x.GroupBy(g => g.GameId)
-                                .Select(fg => new Game
+                                .Select(a => new Game
                                 {
-                                    GameId = fg.Key,
-                                    Name = fg.Select(dc => dc.GameName).FirstOrDefault(),
+                                    GameId = a.Key,
+                                    Name = a.Select(b => b.GameName).FirstOrDefault(),
                                 }).ToList(),
                              SubCollections = x.GroupBy(g => g.SubCollectionId)
-                                .Select(tg => new GameSubCollection
+                                .Select(a => new GameSubCollection
                                 {
-                                    SubCollectionId = tg.Key,
-                                    Name = tg.Select(df => df.SubCollectionName).FirstOrDefault()
+                                    SubCollectionId = a.Key,
+                                    Name = a.Select(b => b.SubCollectionName).FirstOrDefault()
                                 }).ToList()
 
-                         }).ToList();
+                         }).ToListAsync();
                     return gameCollectionDTOOut;
                 };
             }
@@ -63,7 +63,7 @@ namespace WebApplication1.BAL
                     var gameIdParam = new SqlParameter("@gameId", SqlDbType.Int);
                     gameIdParam.Value = (object)gameId ?? DBNull.Value;
 
-                    gamesDetailsDTOOut.gameDetailsView = pOCDB_testContext.GetGamesDetaillsSP
+                    gamesDetailsDTOOut.gameDetailsView =await pOCDB_testContext.GetGamesDetaillsSP
                         .FromSql("Exec dbo.[GetGamesDetaills] @gameId=@gameId", gameIdParam)
                         .GroupBy(g => g.GameId)
                         .Select(x => new GameDetailsView
@@ -78,7 +78,7 @@ namespace WebApplication1.BAL
                                 CollectionId = gc.GameCollectionId,
                                 Name = gc.GameCollectionName
                             }).ToList()
-                        }).ToList();
+                        }).ToListAsync();
                     return gamesDetailsDTOOut;
                 }
             }

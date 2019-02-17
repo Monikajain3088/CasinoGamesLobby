@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -37,9 +30,10 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddOptions();
             services.AddSingleton(Provider => _Configuration);
-
+            //services.AddDbContext<POCDB_testContext>(options => options.UseSqlServer(_Configuration["SQlConn:ConString"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
             {
                 Options.RequireHttpsMetadata = false;
@@ -51,8 +45,8 @@ namespace WebApplication1
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = _Configuration["JwtSecurityToken:Issuer"], //"http://localhost:44363",
-                    ValidAudience = _Configuration["JwtSecurityToken:Audience"],//  "http://localhost:44363",
+                    ValidIssuer = _Configuration["JwtSecurityToken:Issuer"],
+                    ValidAudience = _Configuration["JwtSecurityToken:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["JwtSecurityToken:Key"]))
                 };
             });
@@ -91,7 +85,7 @@ namespace WebApplication1
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             app.UseCors("EnableCORS");
-            app.UseAuthentication();
+            app.UseAuthentication();           
             app.UseHttpsRedirection();
             app.UseMvc();
         }
