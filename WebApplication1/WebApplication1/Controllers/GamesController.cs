@@ -16,17 +16,17 @@ namespace WebApplication1.Controllers
     public class GamesController : ControllerBase
     {
         // GET: api/Games
-        [HttpGet,Authorize]
+        [HttpGet]
         [Route("GameCollections")]
        
-        public IActionResult GetGameCollections(string gameCollectionId)
+        public async Task<IActionResult> GetGameCollections(int? gameCollectionId)
         {
             try
             {
-              return Ok(GamesCollection.GetGameCollections(gameCollectionId));
+              return Ok(await GamesCollection.GetGameCollections(gameCollectionId));
 
             }
-            catch
+            catch (Exception ex)
             {
                 return BadRequest();
             }
@@ -35,11 +35,11 @@ namespace WebApplication1.Controllers
        
         [HttpGet, Authorize]
         [Route("GameDetails")]
-        public IActionResult GetGameDetails(string gameId)
+        public async Task<IActionResult> GetGameDetails(int? gameId)
         {
             try
             {
-                return Ok(GamesCollection.GetGameDetails(gameId));
+                return Ok( await GamesCollection.GetGameDetails(gameId));
 
             }
             catch

@@ -20,9 +20,7 @@ namespace WebApplication1.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfigurationRoot _configurationRoot;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IPasswordHasher<IdentityUser> _passwordHasher;
-
+       
 
         public AuthController(IConfigurationRoot configurationRoot)
         {

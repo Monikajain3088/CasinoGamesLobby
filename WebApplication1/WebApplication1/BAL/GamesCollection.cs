@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.DTO;
 using WebApplication1.Model;
 using WebApplication1.Models;
@@ -12,14 +14,14 @@ namespace WebApplication1.BAL
     public static class GamesCollection
     {
 
-        public static GameCollectionDTOOut GetGameCollections(string gameCollectionId)
+        public static async Task<GameCollectionDTOOut> GetGameCollections(int? gameCollectionId)
         {
             GameCollectionDTOOut gameCollectionDTOOut = new GameCollectionDTOOut();
             try
             {
                 using (POCDB_testContext pOCDB_testContext = new POCDB_testContext())
                 {
-                    var gameCollectionIdParam = new SqlParameter("@gameCollectionId", SqlDbType.Int);
+                    var gameCollectionIdParam =new SqlParameter("@gameCollectionId", SqlDbType.Int);
                     gameCollectionIdParam.Value = (object)gameCollectionId ?? DBNull.Value;
 
                     gameCollectionDTOOut.Gamecollections = pOCDB_testContext.GetGameCollectionsSP
@@ -51,7 +53,7 @@ namespace WebApplication1.BAL
                 return new GameCollectionDTOOut();
             }
         }
-        public static GamesDetailsDTOOut GetGameDetails(string gameId)
+        public static async Task< GamesDetailsDTOOut> GetGameDetails(int? gameId)
         {
             GamesDetailsDTOOut gamesDetailsDTOOut = new GamesDetailsDTOOut();
             try

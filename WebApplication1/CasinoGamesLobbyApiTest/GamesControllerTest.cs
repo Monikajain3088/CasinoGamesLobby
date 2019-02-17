@@ -1,31 +1,49 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApplication1.Controllers;
 using WebApplication1.DTO;
 
 namespace CasinoGamesLobbyApiTest
 {
     [TestClass]
-    class GamesControllerTest
+   public class GamesControllerTest
     {
-        private readonly GamesController _gamesController;
-        private GamesControllerTest()
+        public readonly GamesController _gamesController;
+        public GamesControllerTest()
         {
             _gamesController = new GamesController();
         }
 
         [TestMethod]
-        private void TestGameCollections_OK()
+        public async Task TestGameCollectionsByNullParam_OK()
         {
             try
             {
-                var result = _gamesController.GetGameCollections(GameData.gameCollectionId.ToString());
-                //var viewResult = Assert.IsInstanceOfType<GameCollectionDTOOut>(result);
-                if (result == null){
-                    Assert.IsFalse(false, "should not be null");//you can show your error messages here
-                } else {
-                    //here comes your datagridview databind 
-                }
+                var result =await _gamesController.GetGameCollections(null);
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOfType(((ObjectResult)result).Value, typeof(GameCollectionDTOOut));
+                GameCollectionDTOOut gameCollectionDTOOut = (GameCollectionDTOOut)((ObjectResult)result).Value;
+                Assert.IsFalse(gameCollectionDTOOut.Gamecollections.Count==0);
+               
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail();
+            }
+        }
+        [TestMethod]
+        public async Task TestGameCollectionsByGameCollectionId_OK()
+        {
+            try
+            {
+                var result = await _gamesController.GetGameCollections(3);
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOfType(((ObjectResult)result).Value, typeof(GameCollectionDTOOut));
+                GameCollectionDTOOut gameCollectionDTOOut = (GameCollectionDTOOut)((ObjectResult)result).Value;
+                Assert.IsFalse(gameCollectionDTOOut.Gamecollections.Count == 0);
 
             }
             catch (Exception ex)

@@ -38,7 +38,6 @@ namespace WebApplication1.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=aspnetcoretest.database.windows.net,1433;Database=POCDB_test;Persist Security Info=False;User ID=Admin_Monika;Password=ILoveYou2;MultipleActiveResultSets=true;Integrated Security=False;");
             }
         }
