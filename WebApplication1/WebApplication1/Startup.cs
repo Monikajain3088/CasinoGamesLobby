@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApplication1.Models;
 
 namespace WebApplication1
 {
@@ -29,10 +31,10 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2); 
+            
             services.AddOptions();
-            services.AddSingleton(Provider => _Configuration);
+            services.AddSingleton(Provider => _Configuration);          
             //services.AddDbContext<POCDB_testContext>(options => options.UseSqlServer(_Configuration["SQlConn:ConString"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
             {
@@ -52,7 +54,7 @@ namespace WebApplication1
             });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "CasinoGamessApi", Version = "v1" });
             });
             services.AddCors(options =>
             {
@@ -82,7 +84,7 @@ namespace WebApplication1
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CasinoGamessApi V1");
             });
             app.UseCors("EnableCORS");
             app.UseAuthentication();           

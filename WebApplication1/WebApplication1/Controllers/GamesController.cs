@@ -15,8 +15,13 @@ namespace WebApplication1.Controllers
     
     public class GamesController : ControllerBase
     {
+        /// <summary>
+        ///  Used for fetching Game colections information based on gamecollectonId or fecth  all by passing NUll.
+        /// </summary>
+        /// <param name="gameCollectionId"></param>
+        /// <returns></returns>
         // GET: api/Games
-        [HttpGet]
+        [HttpGet,Authorize]
         [Route("GameCollections")]
        
         public async Task<IActionResult> GetGameCollections(int? gameCollectionId)
@@ -32,7 +37,11 @@ namespace WebApplication1.Controllers
             }
          
         }
-       
+        /// <summary>
+        /// Used for fetching Game information based on gameId or fecth  all by passing NUll.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpGet, Authorize]
         [Route("GameDetails")]
         public async Task<IActionResult> GetGameDetails(int? gameId)

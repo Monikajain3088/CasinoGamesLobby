@@ -13,7 +13,11 @@ namespace WebApplication1.BAL
 {
     public static class GamesCollection
     {
-
+        /// <summary>
+        /// Used for fetching Game colections information based on gamecollectonId or fecth  all by passing NUll from Databse.
+        /// </summary>
+        /// <param name="gameCollectionId"></param>
+        /// <returns></returns>
         public static async Task<GameCollectionDTOOut> GetGameCollections(int? gameCollectionId)
         {
             GameCollectionDTOOut gameCollectionDTOOut = new GameCollectionDTOOut();
@@ -53,6 +57,11 @@ namespace WebApplication1.BAL
                 return new GameCollectionDTOOut();
             }
         }
+        /// <summary>
+        /// Used for fetching Game information based on gameId or fecth  all by passing NUll from Databse.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         public static async Task< GamesDetailsDTOOut> GetGameDetails(int? gameId)
         {
             GamesDetailsDTOOut gamesDetailsDTOOut = new GamesDetailsDTOOut();
